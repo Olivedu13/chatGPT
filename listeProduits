@@ -1,0 +1,340 @@
+import React, { useState } from "react";
+import styled from "styled-components/macro";
+
+import {
+  CardContent,
+  Grid,
+  Card as MuiCard,
+  Typography,
+  TableCell,
+  TableRow,
+  TableHead,
+  Table,
+  TableBody,
+  CardHeader,
+  Tooltip,
+  Zoom,
+  Button,
+  IconButton,
+  Dialog,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
+
+import { spacing } from "@mui/system";
+import SearchProd from "./SearchProd";
+import ProduitForm from "./ProduitForm";
+import { Add as AddIcon } from "@mui/icons-material";
+
+const Card = styled(MuiCard)(spacing);
+
+const Price = styled.div`
+  text-align: center;
+  padding-bottom: ${(props) => props.theme.spacing(3)}px;
+`;
+
+const rows = [
+  createData(1, "DIAMANT BLANC ROND 0ct25 GSI", 500, 625, true, 1.14),
+  createData(20, "DIAMANT BLANC ROND 0ct01 GSI = 0ct10", 200, 230, false, 1.14),
+  createData(20, "DIAMANT BLANC ROND 0ct02 GSI = 0ct12", 200, 230, false, 1.14),
+  createData(20, "DIAMANT BLANC ROND 0ct03 GSI = 0ct14", 200, 230, false, 1.14),
+  createData(20, "DIAMANT BLANC ROND 0ct04 GSI = 0ct16", 200, 230, false, 1.14),
+];
+const rowsMfs = [
+  createData(60, "Main d'Oeuvre", 32, 625, true),
+  createData(3, "Poids Or", 150, 625, true),
+  createData(30, "Serti", 30, 625, true),
+  createData(20, "Fonte", 20, 625, true),
+  createData(0, "Divers", 0, 625, true),
+];
+
+function createData(qte, description, prixR, prixV, isCentre, coef) {
+  return { qte, description, prixR, prixV, isCentre, coef };
+}
+
+const handleSearch = (event, value) => {
+  console.log(value);
+  // Do something with the selected value
+};
+
+const Produit = () => {
+  return (
+    <Table size="small">
+      <TableHead>
+        <TableRow>
+          <TableCell>Qte</TableCell>
+          <TableCell align="center">Description</TableCell>
+          <TableCell align="right">Prix</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {rowsMfs.map((row) => (
+          <TableRow key={row.description}>
+            <TableCell component="th" scope="row">
+              {row.qte}
+            </TableCell>
+            <TableCell align="center">{row.description}</TableCell>
+            <TableCell align="right">{row.prixR}</TableCell>
+          </TableRow>
+        ))}
+        <TableRow>
+          <TableCell>TOTAL</TableCell>
+          <TableCell align="center"></TableCell>
+          <TableCell align="right">232</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+};
+
+const PierreProduit = () => {
+  return (
+    <Table size="small">
+      <TableHead>
+        <TableRow>
+          <TableCell>Qte</TableCell>
+          <TableCell>Description</TableCell>
+          <TableCell>Revient</TableCell>
+          <TableCell>Coef</TableCell>
+
+          <TableCell>Vente</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {rows.map((row) => (
+          <TableRow key={row.description}>
+            <TableCell
+              component="th"
+              scope="row"
+              style={{ color: row.isCentre ? "red" : "" }}
+            >
+              {row.qte}
+            </TableCell>
+            <TableCell style={{ color: row.isCentre ? "red" : "" }}>
+              {row.description}
+            </TableCell>
+            <TableCell style={{ color: row.isCentre ? "red" : "" }}>
+              {row.prixR}
+            </TableCell>
+            <TableCell style={{ color: row.isCentre ? "red" : "" }}>
+              {row.coef}
+            </TableCell>
+            <TableCell style={{ color: row.isCentre ? "red" : "" }}>
+              {row.prixV}
+            </TableCell>
+          </TableRow>
+        ))}
+        <TableRow>
+          <TableCell>81</TableCell>
+          <TableCell align="center">TOTAL</TableCell>
+          <TableCell>700</TableCell>
+          <TableCell></TableCell>
+          <TableCell>855</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+};
+const ImageProduit = () => {
+  return (
+    <>
+      <img style={{ maxWidth: 200 }} src="/static/img/5849.png" alt="5849" />
+    </>
+  );
+};
+const PricerProduit = () => {
+  return (
+    <Grid container justifyContent="center" style={{ marginTop: -30 }}>
+      <Grid item xs={12} lg={10}>
+        <Grid container spacing={6} alignItems="flex-end">
+          <Grid item xs={4} md={4}>
+            <Card p={5} style={{ backgroundColor: "transparent " }}>
+              <CardHeader
+                title="MFS"
+                titleTypographyProps={{ align: "center", color: "primary" }}
+                pb={0}
+                pt={2}
+              />
+              <CardContent>
+                <Price>
+                  <Typography
+                    component="h2"
+                    variant="h1"
+                    color="textPrimary"
+                    align="center"
+                    display="inline"
+                  >
+                    510 €
+                  </Typography>
+                </Price>
+                <Typography variant="subtitle1" align="center">
+                  Prix Revient : 232 €
+                  <br />
+                  Coef MFS : 2.2
+                  <br />
+                  Marge : 280 € (54%)
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4} md={4}>
+            <Card p={5} style={{ backgroundColor: "transparent " }}>
+              <CardHeader
+                title="PIECE"
+                titleTypographyProps={{ align: "center", color: "primary" }}
+                pb={0}
+                pt={2}
+              />
+              <CardContent>
+                <Price>
+                  <Typography
+                    component="h2"
+                    variant="h1"
+                    color="textPrimary"
+                    align="center"
+                    display="inline"
+                  >
+                    1000 €
+                  </Typography>
+                </Price>
+                <Typography variant="subtitle1" align="center">
+                  Prix Revient : 932 €
+                  <br />
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title={
+                      <div style={{ fontSize: "1rem", textAlign: "center" }}>
+                        Total MFS x 1.59 <br />
+                        + Total Pierre * coef <br />+ 20 et arrondi dizaine
+                        superieure
+                      </div>
+                    }
+                  >
+                    <Button variant="contained" color="secondary" mr={2}>
+                      Tarif Normal
+                    </Button>
+                  </Tooltip>
+                  <br />
+                  Marge : 350 € (20%)
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4} md={4}>
+            <Card p={5} style={{ backgroundColor: "transparent " }}>
+              <CardHeader
+                title="CV"
+                titleTypographyProps={{ align: "center", color: "primary" }}
+                pb={0}
+                pt={2}
+              />
+              <CardContent>
+                <Price>
+                  <Typography
+                    component="h2"
+                    variant="h1"
+                    color="textPrimary"
+                    align="center"
+                    display="inline"
+                  >
+                    750 €
+                  </Typography>
+                </Price>
+                <Typography variant="subtitle1" align="center">
+                  Prix Revient : 432 €
+                  <br />
+                  Coef Mfs : 2.2
+                  <br />
+                  Marge : 350 € (36%)
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+const ListeProduit = () => {
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleSelectedValueChange = (value) => {
+    setSelectedValue(value);
+  };
+
+  return (
+    <React.Fragment>
+      <Grid container justifyContent="flex-end">
+        <IconButton
+          aria-label="Ajouter "
+          size="large"
+          onClick={() => setOpen(true)}
+        >
+          <AddIcon />
+        </IconButton>
+      </Grid>
+      <Grid item xs={3} md={3} align="right" position="absolute">
+        <Typography
+          gutterBottom
+          variant="subtitle1"
+          component="h3"
+          align="center"
+          color="textSecondary"
+          style={{ height: "30px" }}
+        >
+          {selectedValue && selectedValue.type}
+        </Typography>
+        <Typography gutterBottom variant="h5" component="h2" align="center">
+          {selectedValue && selectedValue.ref + " - " + selectedValue.label}
+        </Typography>
+        <SearchProd onSelectedValueChange={handleSelectedValueChange} />
+      </Grid>
+      <Grid item xs={12} md={12} align="center" style={{ marginTop: "-50px" }}>
+        <ImageProduit />
+      </Grid>
+
+      {PricerProduit()}
+      <Grid container spacing={6} justifyContent="center">
+        <Grid
+          item
+          xs={12}
+          md={3}
+          style={{ border: "solid 1px", borderRadius: 10, margin: 1 }}
+        >
+          Détail MFS
+          {Produit()}
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          md={6}
+          style={{ border: "solid 1px", borderRadius: 10, margin: 1 }}
+        >
+          Pierres
+          {PierreProduit()}
+        </Grid>
+      </Grid>
+      <Dialog
+        open={open}
+        maxWidth={"xl"}
+        onClose={() => {
+          setOpen(false);
+        }}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogContent>
+          <ProduitForm />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+};
+
+export default ListeProduit;
